@@ -29,7 +29,6 @@ const UserTable = (props) => {
                         <td>{!user.data ? 'нет данных' : user.data.name }</td>
                         <td>{!user.data ?  'нет данных' : user.data.surname}</td>
                         <td>
-                            {/*() => updateUser(user._id)*/}
                             <button type='button' className='editBtn' onClick={() => props.editRow(user)}>Edit</button>
                             <button type='button' className='button muted-button' onClick={() => handleDeleteUser(user._id)}>Delete
                             </button>

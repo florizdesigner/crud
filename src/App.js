@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 import UserTable from './components/UserTable';
 
-function App (){
+function App() {
     const instance = axios.create({
         baseURL: 'http://178.128.196.163:3000/api/',
     })
@@ -27,13 +27,13 @@ function App (){
     const addUser = (userName, userSurname) => {
         if (userName && userSurname) {
             const newUser = {
-                "_id": Math.random().toString(30).slice(2,5),
-                "data": {
-                    "name": userName,
-                    "surname": userSurname,
+                '_id': Math.random().toString(30).slice(2, 5),
+                'data': {
+                    'name': userName,
+                    'surname': userSurname,
                 }
             }
-            instance.put('records', {"data": {"name": userName, "surname": userSurname}})
+            instance.put('records', {'data': {'name': userName, 'surname': userSurname}})
                 .then(() => alert('Пользователь добавлен'))
             setUsers([...users, newUser])
 
@@ -43,23 +43,23 @@ function App (){
     }
     const editRow = (user) => {
         setEditing(true)
-        const currentValue = {"id": user._id, "data": {"name": user.data.name, "surname": user.data.surname}}
+        const currentValue = {'id': user._id, 'data': {'name': user.data.name, 'surname': user.data.surname}}
         setCurrentUser(currentValue)
     }
     const updateUser = (id, updatedUser) => {
         // const updatedUser = {"id": id,"data": {"name": name, "surname": surname}}
         setEditing(false)
         setUsers(users.map(user => user._id === id ? updatedUser : user))
-        // instance.post(`records/${id}`, {"data": {"name": name, "surname": surname}})
-        //     .then(() => alert('Данные пользователя обновлены'))
+        instance.post(`records/${id}`, {'data': {'name': updatedUser.data.name, 'surname': updatedUser.data.surname}})
+            .then(() => alert('Данные пользователя обновлены'))
     }
 
     return (
-      <div className="App">
-          <UserTable setUsers={setUsers} users={users} deleteUser={deleteUser}
-                     addUser={addUser} updateUser={updateUser} editing={editing} setEditing={setEditing}
-                     editRow={editRow} currentUser={currentUser}/>
-      </div>
+        <div className='App'>
+            <UserTable setUsers={setUsers} users={users} deleteUser={deleteUser}
+                       addUser={addUser} updateUser={updateUser} editing={editing} setEditing={setEditing}
+                       editRow={editRow} currentUser={currentUser}/>
+        </div>
     )
 }
 
